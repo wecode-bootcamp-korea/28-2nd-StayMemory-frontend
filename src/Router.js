@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp/SignUp';
 import Detail from './pages/Detail/Detail';
 import MyPage from './pages/MyPage/MyPage';
 import Nav from './components/Nav/Nav';
+import KakaoLogin from './components/KakaoLogin/KakaoLogin';
 
 export default function Router() {
   return (
@@ -18,6 +19,7 @@ export default function Router() {
         <Route path="/list" element={<List />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/signin_kakao" element={<KakaoLogin />} />
       </Routes>
     </BrowserRouter>
   );
