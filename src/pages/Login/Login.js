@@ -2,26 +2,11 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 function Login() {
-  const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code`;
-
   return (
-    <Container>
-      <div>
-        <ContentAnimationBox>
-          <TitleContainer>
-            <EngTitle>LOGIN</EngTitle>
-            <KorTitle>로그인</KorTitle>
-          </TitleContainer>
-        </ContentAnimationBox>
-
-        <LoginForm>
-          <LoginInput placeholder="이메일 아이디" />
-          <LoginInput placeholder="비밀번호" />
-          <LoginButton>LOGIN</LoginButton>
-          <a href={KAKAO_LOGIN_URL}>카카오로그인</a>
-        </LoginForm>
-      </div>
-    </Container>
+    <div className="TitleWrap">
+      <div>Login</div>
+      <div>로그인</div>
+    </div>
   );
 }
 
