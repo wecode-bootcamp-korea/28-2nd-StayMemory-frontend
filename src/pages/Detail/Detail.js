@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Datail() {
-  return <div>detail</div>;
+function Detail() {
+  return <div>details</div>;
 }
 
-export default Datail;
+export default Detail;
