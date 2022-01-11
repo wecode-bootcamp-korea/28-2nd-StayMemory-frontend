@@ -5,7 +5,8 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
 
   body {
-    border-box: box-sizing;
+    box-sizing: border-box;
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
   };
 `;
 
