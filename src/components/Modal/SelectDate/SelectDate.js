@@ -1,22 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Calendar from 'react-date-range-calendar';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { selectedDatesState, validDatesState } from '../GlobalState';
 
 function SelectDate() {
+  const [selectedDates, setSelectedDates] = useRecoilState(selectedDatesState);
+  const [validDates, setValidDates] = useRecoilState(validDatesState);
   const disabledDatesArr = ['2022-01-21', '2022-01-20'];
-  const [isAllAbleDate, setIsAllAbleDate] = useState(true);
+
   function validDate(dates) {
     disabledDatesArr.some(disabledDate => !dates.includes(disabledDate))
-      ? setIsAllAbleDate(true)
-      : setIsAllAbleDate(false);
+      ? setValidDates(true)
+      : setValidDates(false);
   }
+
+  const selectedDatesIsNotValid =
+    selectedDates.check_out !== null && validDates === false;
 
   return (
     <Wrapper>
-      <p>{isAllAbleDate || '예약 불가능한 날짜가 포함되었습니다.'}</p>
+      <Notice>
+        {selectedDatesIsNotValid ? '예약 불가능한 날짜가 포함되었습니다.' : ''}
+      </Notice>
       <Calendar
         onSelect={(startDate, endDate, validDateRange) => {
           validDate(validDateRange);
+          setSelectedDates({
+            ...selectedDates,
+            check_in: startDate,
+            check_out: endDate,
+          });
         }}
         selectedRange={[null, null]}
         disablePrevDates={true}
@@ -33,13 +47,20 @@ function SelectDate() {
         }}
         inRangedTdCssObj={{ backgroundColor: 'black' }}
       />
-      <button>SEARCH</button>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  //
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60rem;
+`;
+
+const Notice = styled.p`
+  height: 1rem;
+  color: red;
 `;
 
 export default SelectDate;

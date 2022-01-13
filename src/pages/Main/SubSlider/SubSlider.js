@@ -15,7 +15,6 @@ function SubSlider() {
         .then(res => setSubSliderList([...res]));
     }
     loadSubSliderList();
-    // console.log(subSliderList);
   }, []);
 
   function ArrowLeft(props) {
@@ -63,14 +62,12 @@ function SubSlider() {
 
 const Wrapper = styled.div`
   height: 20rem;
-  /* background-color: skyblue; */
 
   .slideContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 300px;
-    /* background-color: orange; */
   }
 `;
 

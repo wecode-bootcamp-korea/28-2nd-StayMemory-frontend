@@ -1,45 +1,69 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Modal from '../Modal/Modal';
 import { HiUser, HiOutlineLocationMarker } from 'react-icons/hi';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { BsToggleOn, BsToggleOff } from 'react-icons/bs';
+import ModalPortal from '../Modal/ModalPortal';
+import { useRecoilState } from 'recoil';
+import { showModalState } from '../Modal/GlobalState';
+import { useNavigate } from 'react-router';
 
 function Nav() {
+  const [modal, setModal] = useRecoilState(showModalState);
   const isLoggedIn = sessionStorage.getItem('access_token');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigate = useNavigate();
   function handleDarkMode() {
     setIsDarkMode(!isDarkMode);
   }
+
+  function goToPage(page) {
+    navigate(page);
+  }
+
   return (
     <Wrapper>
-      <div className="logo">logo</div>
+      <div className="logo" onClick={() => goToPage('/')}>
+        logo
+      </div>
       <FilterWrap>
         <span className="location">
           <HiOutlineLocationMarker />
-          <p>어디로 떠날까요?</p>
+          <FilterButton onClick={() => setModal('location')}>
+            어디로 떠날까요?
+          </FilterButton>
         </span>
         <span className="date">
           <AiOutlineCalendar />
-          <p>언제 떠날까요?</p>
+          <FilterButton onClick={() => setModal('date')}>
+            언제 떠날까요?
+          </FilterButton>
         </span>
       </FilterWrap>
       <MenuWrap>
-        <span>FIND STAY</span>
+        <span onClick={() => goToPage('/list')}>FIND STAY</span>
         <span>PROMOTION</span>
         <span>JOURNAL</span>
         <span>PRE-ORDER</span>
       </MenuWrap>
       <UserWrap>
         {isLoggedIn && <HiUser />}
-        <button className="login">{isLoggedIn ? 'LOGOUT' : 'LOGIN'}</button>
+        <button className="login" onClick={() => goToPage('/login')}>
+          {isLoggedIn ? 'LOGOUT' : 'LOGIN'}
+        </button>
         {isDarkMode ? (
           <BsToggleOff onClick={handleDarkMode} />
         ) : (
           <BsToggleOn onClick={handleDarkMode} />
         )}
       </UserWrap>
-      {/* <PopUp component={<Calendar2 />} title="언제 떠날까요?" /> */}
-      {/* <PopUp component={<Location />} title="어디로 떠날까요?" /> */}
+
+      {modal !== null && (
+        <ModalPortal>
+          <Modal />
+        </ModalPortal>
+      )}
     </Wrapper>
   );
 }
@@ -72,6 +96,10 @@ const FilterWrap = styled.div`
     margin-right: 0.3rem;
     font-size: 1.5rem;
   }
+`;
+
+const FilterButton = styled.span`
+  cursor: pointer;
 `;
 
 const MenuWrap = styled.span`

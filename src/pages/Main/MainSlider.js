@@ -64,7 +64,6 @@ function MainSlider() {
 const Wrapper = styled.div`
   position: relative;
   height: 700px;
-  /* width: 500px; */
   background-color: skyblue;
   margin: 5% auto;
   width: 100%;
@@ -75,7 +74,6 @@ const Wrapper = styled.div`
     height: 7.5rem;
     background-color: transparent;
     border: none;
-    /* opacity: 0.8; */
     transform: translate(8.5rem, 36.2rem);
     z-index: 2;
   }
@@ -86,7 +84,6 @@ const Wrapper = styled.div`
     height: 7.5rem;
     background-color: transparent;
     border: none;
-    /* opacity: 0.8; */
     transform: translate(13.1rem, 35.2rem);
     z-index: 2;
   }
