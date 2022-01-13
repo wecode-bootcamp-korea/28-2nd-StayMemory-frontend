@@ -7,20 +7,23 @@ import Detail from './pages/Detail/Detail';
 import MyPage from './pages/MyPage/MyPage';
 import Nav from './components/Nav/Nav';
 import KakaoLogin from './components/KakaoLogin/KakaoLogin';
+import { RecoilRoot } from 'recoil';
 
 export default function Router() {
   return (
-    <BrowserRouter>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/list" element={<List />} />
-        <Route path="/detail" element={<Detail />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/signin_kakao" element={<KakaoLogin />} />
-      </Routes>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Nav />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/list" element={<List />} />
+          <Route path="/findstay/:hotelName" element={<Detail />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/signin_kakao" element={<KakaoLogin />} />
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }

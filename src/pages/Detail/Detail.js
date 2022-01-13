@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosArrowRoundBack, IoIosArrowDown } from 'react-icons/io';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import showModalState, {
+  selectedDatesState,
+} from '../../components/Modal/GlobalState';
+import { useParams } from 'react-router-dom';
 
 function Detail() {
   const [detail, setDetail] = useState({});
+  const setModal = useSetRecoilState(showModalState);
+  const selectedDates = useRecoilValue(selectedDatesState);
+  const params = useParams();
 
   useEffect(() => {
-    fetch('/data/detail.json')
+    fetch(`/data/detail${params.hotelName}.json`)
       .then(res => res.json())
       .then(res => setDetail(res));
   }, []);
+
+  function showDatesModal() {
+    setModal('date_detail');
+  }
 
   return (
     <Wrapper>
@@ -22,9 +34,15 @@ function Detail() {
           </BackWrapper>
           <SelectWrapper>
             <h2>{detail.hotelName}</h2>
-            <SelectDateWrapper>
-              <div>날짜를 선택해주세요</div>
-              <IoIosArrowDown />
+            <SelectDateWrapper onClick={showDatesModal}>
+              {selectedDates.check_out !== null ? (
+                <p>{`${selectedDates.check_in}~${selectedDates.check_out}`}</p>
+              ) : (
+                <>
+                  <div>날짜를 선택해주세요</div>
+                  <IoIosArrowDown />
+                </>
+              )}
             </SelectDateWrapper>
             <BookButton>
               <button>결제하기</button>
