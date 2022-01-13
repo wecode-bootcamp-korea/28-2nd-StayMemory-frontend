@@ -1,0 +1,10 @@
+  {
+    "hotelName": "베로마",
+    "hotelDescription": "베로마는 아늑한 원룸의 형태로 거실 겸 침실과 일자형 주방, 다용도실, 건식 세면대, 그리고 화장실로 구성되어 있습니다.",
+    "checkin": "15:00",
+    "checkout": "11:00",
+    "headCount": 2,
+    "area": 31.4,
+    "bed": "퀸 침대 1",
+    "img": "/images/room.jpg"
+  }
