@@ -12,7 +12,9 @@ function Nav() {
   }
   return (
     <Wrapper>
-      <div className="logo">logo</div>
+      <Logo className="logo">
+        <img src="/images/logo.png" alt="logo" />
+      </Logo>
       <FilterWrap>
         <span className="location">
           <HiOutlineLocationMarker />
@@ -38,8 +40,6 @@ function Nav() {
           <BsToggleOn onClick={handleDarkMode} />
         )}
       </UserWrap>
-      {/* <PopUp component={<Calendar2 />} title="언제 떠날까요?" /> */}
-      {/* <PopUp component={<Location />} title="어디로 떠날까요?" /> */}
     </Wrapper>
   );
 }
@@ -53,6 +53,12 @@ const Wrapper = styled.div`
   padding: 0 3rem 0 3rem;
   border-bottom: 1px solid lightgrey;
   font-size: 0.9rem;
+`;
+
+const Logo = styled.div`
+  & > img {
+    width: 6rem;
+  }
 `;
 
 const FilterWrap = styled.div`
