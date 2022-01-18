@@ -7,11 +7,10 @@ function MyPage() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const queryString = location.search;
 
-  console.log(location);
   useEffect(() => {
-    const queryString = location.search;
-    fetch('http://10.58.0.203:8050/wishlists', {
+    fetch('http://10.58.0.203:8050/wishlists' + queryString, {
       method: 'GET',
       headers: {
         Authorization:
@@ -23,13 +22,15 @@ function MyPage() {
       .then(res => {
         setData(res.data);
       });
-  }, []);
+  }, [queryString]);
+
   const updateOffset = btnidx => {
     const limit = 2;
     const offset = btnidx * limit;
     const queryString = `?limit=${limit}&offset=${offset}`;
     navigate(queryString);
   };
+
   return (
     <Container>
       <TitleContainer>
