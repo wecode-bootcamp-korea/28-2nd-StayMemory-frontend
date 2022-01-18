@@ -11,10 +11,18 @@ function MyPage() {
   console.log(location);
   useEffect(() => {
     const queryString = location.search;
-    fetch('http://localhost:3001/data/myPageData.json', { method: 'GET' })
+    fetch('http://10.58.0.203:8050/wishlists', {
+      method: 'GET',
+      headers: {
+        Authorization:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
+      },
+    })
       //${location.search}
       .then(res => res.json())
-      .then(res => setData(res));
+      .then(res => {
+        setData(res.data);
+      });
   }, []);
   const updateOffset = btnidx => {
     const limit = 2;
