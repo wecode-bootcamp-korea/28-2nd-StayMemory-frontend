@@ -6,6 +6,7 @@ import showModalState, {
   selectedDatesState,
 } from '../../components/Modal/GlobalState';
 import { useParams } from 'react-router-dom';
+// import SelectDateFindStay from '../'
 
 function Detail() {
   const [detail, setDetail] = useState({});
@@ -36,7 +37,7 @@ function Detail() {
             <h2>{detail.hotelName}</h2>
             <SelectDateWrapper onClick={showDatesModal}>
               {selectedDates.check_out !== null ? (
-                <p>{`${selectedDates.check_in}~${selectedDates.check_out}`}</p>
+                <p>{`${selectedDates.checkin}~${selectedDates.checkout}`}</p>
               ) : (
                 <>
                   <div>날짜를 선택해주세요</div>
