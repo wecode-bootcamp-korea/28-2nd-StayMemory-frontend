@@ -11,7 +11,7 @@ function MyPage() {
   const queryString = location.search;
 
   useEffect(() => {
-    fetch('http://192.168.243.37:8051/wishlists' + queryString, {
+    fetch('http://192.168.243.37:8082/wishlists' + queryString, {
       headers: {
         Authorization:
           'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
@@ -35,11 +35,17 @@ function MyPage() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3002/data/welcomeData.json', { method: 'GET' }) //method get 은 생략 가능
+    fetch('http://192.168.243.37:8082/users/info', {
+      method: 'GET',
+      headers: {
+        Authorization:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
+      },
+    }) //method get 은 생략 가능
       .then(res => res.json())
       .then(res => setWelcomeData(res));
   }, []);
-  console.log(welcomeData);
+  // console.log(welcomeData);
   return (
     <Container>
       <TitleContainer>
@@ -48,13 +54,13 @@ function MyPage() {
       </TitleContainer>
       {welcomeData && (
         <WelcomeWrap>
-          <Welcome>{welcomeData[0].nickname}님 반가워요!</Welcome>
+          <Welcome>{welcomeData.data.nickname}님 반가워요!</Welcome>
           <TravelCount>
-            스테이 메모리와 함께 {welcomeData[0].travelNumber}번의 여행을
+            스테이 메모리와 함께 {welcomeData.data.travelNumber}번의 여행을
             했어요.
           </TravelCount>
           <ClientInfo>
-            <ClientEmail>{welcomeData[0].email}</ClientEmail>
+            <ClientEmail>{welcomeData.data.email}</ClientEmail>
             <ClientEdit>회원 정보 수정</ClientEdit>
           </ClientInfo>
         </WelcomeWrap>
