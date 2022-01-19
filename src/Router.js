@@ -6,7 +6,8 @@ import SignUp from './pages/SignUp/SignUp';
 import Detail from './pages/Detail/Detail';
 import MyPage from './pages/MyPage/MyPage';
 import Nav from './components/Nav/Nav';
-import Liks from './components/Likes/Liks';
+import Likes from './components/Likes/Likes';
+
 export default function Router() {
   return (
     <BrowserRouter>
@@ -18,7 +19,7 @@ export default function Router() {
         <Route path="/list" element={<List />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/likes" element={<Liks />} />
+        <Route path="/likes" element={<Likes />} />
       </Routes>
     </BrowserRouter>
   );
