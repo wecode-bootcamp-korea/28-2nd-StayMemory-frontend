@@ -14,8 +14,8 @@ function DatePicker() {
 
   const handleDatesChange = ({ startDate, endDate }) => {
     setSelectedDates({
-      check_in: startDate,
-      check_out: endDate,
+      checkin: startDate,
+      checkout: endDate,
     });
   };
 
