@@ -44,6 +44,8 @@ const ContentAnimationBox = styled.div`
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 600px;
 `;
 
 const TitleContainer = styled.div`
