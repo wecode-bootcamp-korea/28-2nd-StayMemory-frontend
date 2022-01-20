@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {
+  useNavigate,
+  useLocation,
+  useParams,
+  useSearchParams,
+  createSearchParams,
+} from 'react-router-dom';
 import styled from 'styled-components';
 import PageBtn from '../../components/PageBtn';
 
@@ -8,20 +14,47 @@ function MyPage() {
   const [welcomeData, setWelcomeData] = useState();
   const navigate = useNavigate();
   const location = useLocation();
-  const queryString = location.search;
+  const queryString = location.pathname;
+  const params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const page = {
+    W: 'wishlists',
+    R: 'reservations',
+  };
+
+  const filter = {
+    R: 'reservation',
+    H: 'history',
+  };
+
+  function handleQueryString() {
+    if (params.page === page.R) {
+      return `${params.page}?filter=${searchParams.get('filter')}`;
+    } else {
+      return `${params.page}`;
+    }
+  }
+  function handleFilter(filter) {
+    setSearchParams(createSearchParams({ filter: filter }));
+  }
 
   useEffect(() => {
-    fetch('http://192.168.243.37:8082/wishlists' + queryString, {
-      headers: {
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
-      },
-    })
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/${handleQueryString()}`,
+      {
+        headers: {
+          Authorization:
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
+        },
+      }
+    )
       .then(res => res.json())
-      .then(res => {
-        setHotelData(res.hotelData);
-      });
-  }, [queryString]);
+      .then(res => console.log(res));
+    // .then(res => {
+    //   setHotelData(res.hotelData);
+    // });
+  }, [queryString, location.pathname]);
 
   const updateOffset = btnidx => {
     const limit = 2;
@@ -65,11 +98,17 @@ function MyPage() {
         <SideMenu>
           <ul>
             <SideMenuList>My Stay</SideMenuList>
-            <SideMenuList>예약 정보</SideMenuList>
+            <SideMenuList
+              onClick={() => navigate(`/mypage/${page.R}?filter=${filter.R}`)}
+            >
+              예약 정보
+            </SideMenuList>
             <SideMenuList>취소 내역</SideMenuList>
             <SideMenuList>프리미엄 숙박권</SideMenuList>
             <SideMenuList>이용권</SideMenuList>
-            <SideMenuList>관심 스테이</SideMenuList>
+            <SideMenuList onClick={() => navigate(`/mypage/${page.W}`)}>
+              관심 스테이
+            </SideMenuList>
           </ul>
           <ul>
             <SideMenuList>내 계정</SideMenuList>
@@ -79,10 +118,19 @@ function MyPage() {
           </ul>
         </SideMenu>
         <MyPageContent>
+          {params.page === page.R && (
+            <ButtonsWrapper>
+              <ReservationInfo onClick={() => handleFilter(filter.R)}>
+                예약 정보
+              </ReservationInfo>
+              <History onClick={() => handleFilter(filter.H)}>
+                다녀온 스테이
+              </History>
+            </ButtonsWrapper>
+          )}
           <HotelInfo>
             {hotelData.map(hotelEle => {
               return (
-                // eslint-disable-next-line react/jsx-key
                 <HotelWrap key={hotelEle.id}>
                   <HotelInfoText>
                     <HotelNameKor>{hotelEle.hotelNameKor}</HotelNameKor>
@@ -146,6 +194,7 @@ const SideMenu = styled.div`
 
 const SideMenuList = styled.li`
   height: 34px;
+  cursor: pointer;
 `;
 
 const MyPageContent = styled.div`
@@ -153,6 +202,16 @@ const MyPageContent = styled.div`
   width: 800px;
   border-top: 4px black solid;
   padding-top: 50px;
+`;
+
+const ButtonsWrapper = styled.div``;
+const ReservationInfo = styled.span`
+  padding: 1rem;
+  cursor: pointer;
+`;
+const History = styled.span`
+  padding: 1rem;
+  cursor: pointer;
 `;
 const ReserveBtn = styled.button`
   width: 150px;

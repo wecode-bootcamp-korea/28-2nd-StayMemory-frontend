@@ -18,9 +18,9 @@ export default function Router() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/list" element={<List />} />
-          <Route path="/detail" element={<Detail />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/users/signin-kakao" element={<KakaoLogin />} />
+          <Route path="/findstay/:hotelName" element={<Detail />} />
+          <Route path="/mypage/:page" element={<MyPage />} />
+          <Route path="/signin_kakao" element={<KakaoLogin />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
