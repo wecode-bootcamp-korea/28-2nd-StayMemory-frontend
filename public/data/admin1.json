@@ -1,12 +1,12 @@
 [
   {
-    "id": 2,
+    "id": 1,
     "img": "/images/room.jpg",
     "name": "베로마",
     "price": 2000
   },
   {
-    "id": 4,
+    "id": 2,
     "img": "/images/room.jpg",
     "name": "베로마2",
     "price": 2000
