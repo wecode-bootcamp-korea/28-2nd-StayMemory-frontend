@@ -6,7 +6,6 @@ import showModalState, {
   selectedDatesState,
 } from '../../components/Modal/GlobalState';
 import { useParams } from 'react-router-dom';
-// import SelectDateFindStay from '../'
 
 function Detail() {
   const [detail, setDetail] = useState({});
@@ -15,13 +14,52 @@ function Detail() {
   const params = useParams();
 
   useEffect(() => {
-    fetch(`/data/detail${params.hotelName}.json`)
-      .then(res => res.json())
-      .then(res => setDetail(res));
+    // fetch(`/data/detail${params.hotelName}.json`)
+    function getDetail() {
+      fetch(
+        `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays/2`
+      )
+        .then(res => res.json())
+        .then(res => console.log(res));
+      // .then(res => setDetail(res));
+    }
+    getDetail();
   }, []);
 
   function showDatesModal() {
     setModal('date_detail');
+    submitCheckinDate();
+  }
+
+  function submitCheckinDate() {
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays/2/available-date?start-date=2022-01-01`
+    );
+    // .then(res => res.json())
+    // .then(res => console.log(res));
+  }
+
+  function makeReservation() {
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/reservations`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          stayId: 1,
+          numPeople: 3,
+          checkin: '2022-01-03',
+          checkout: '2022-01-05',
+          price: 55000,
+          payment: 'credit_card',
+        }),
+        headers: {
+          Authorization:
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
+        },
+      }
+    )
+      .then(res => res.json())
+      .then(res => console.log(res));
   }
 
   return (
@@ -45,7 +83,7 @@ function Detail() {
                 </>
               )}
             </SelectDateWrapper>
-            <BookButton>
+            <BookButton onClick={makeReservation}>
               <button>결제하기</button>
             </BookButton>
           </SelectWrapper>
