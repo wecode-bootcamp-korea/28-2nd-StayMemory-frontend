@@ -6,14 +6,15 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import { BsToggleOn, BsToggleOff } from 'react-icons/bs';
 import ModalPortal from '../Modal/ModalPortal';
 import { useRecoilState } from 'recoil';
-import { showModalState } from '../Modal/GlobalState';
+import { isLoggedInState, showModalState } from '../Modal/GlobalState';
 import { useNavigate } from 'react-router';
 
 function Nav() {
   const [modal, setModal] = useRecoilState(showModalState);
-  const isLoggedIn = sessionStorage.getItem('access_token');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
+  const LOGIN_TOKEN = 'loginToken';
+  const isLoggedIn = sessionStorage.getItem(LOGIN_TOKEN);
   function handleDarkMode() {
     setIsDarkMode(!isDarkMode);
   }
@@ -22,11 +23,13 @@ function Nav() {
     navigate(page);
   }
 
+  function logout() {
+    sessionStorage.removeItem(LOGIN_TOKEN);
+  }
+
   return (
     <Wrapper>
-      <div className="logo" onClick={() => goToPage('/')}>
-        logo
-      </div>
+      <Logo onClick={() => goToPage('/')}></Logo>
       <FilterWrap>
         <span className="location">
           <HiOutlineLocationMarker />
@@ -48,10 +51,12 @@ function Nav() {
         <span>PRE-ORDER</span>
       </MenuWrap>
       <UserWrap>
-        {isLoggedIn && <HiUser />}
-        <button className="login" onClick={() => goToPage('/login')}>
-          {isLoggedIn ? 'LOGOUT' : 'LOGIN'}
-        </button>
+        {isLoggedIn && <HiUser onClick={() => goToPage('/mypage/wishlists')} />}
+        {isLoggedIn ? (
+          <LoginButton onClick={logout}>LOGOUT</LoginButton>
+        ) : (
+          <LoginButton onClick={() => goToPage('/login')}>LOGIN</LoginButton>
+        )}
         {isDarkMode ? (
           <BsToggleOff onClick={handleDarkMode} />
         ) : (
@@ -77,6 +82,12 @@ const Wrapper = styled.div`
   padding: 0 3rem 0 3rem;
   border-bottom: 1px solid lightgrey;
   font-size: 0.9rem;
+`;
+
+const Logo = styled.img.attrs(() => ({
+  src: '/images/logo.png',
+}))`
+  width: 4.2rem;
 `;
 
 const FilterWrap = styled.div`
@@ -118,17 +129,17 @@ const UserWrap = styled.span`
   padding-left: 2.6rem;
   border-left: 1px solid lightgrey;
 
-  & > button {
-    background-color: transparent;
-    border: none;
-    font-weight: 600;
-    /* font-size: 1.2rem; */
-  }
-
   & > svg {
     margin-left: 0.4rem;
     font-size: 1.5rem;
+    cursor: pointer;
   }
+`;
+
+const LoginButton = styled.button`
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
 `;
 
 export default Nav;

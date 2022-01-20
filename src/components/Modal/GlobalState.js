@@ -8,8 +8,8 @@ export const showModalState = atom({
 export const selectedDatesState = atom({
   key: 'selectedDatesState',
   default: {
-    check_in: null,
-    check_out: null,
+    checkin: null,
+    checkout: null,
   },
 });
 
@@ -21,8 +21,28 @@ export const validDatesState = atom({
 export const selectedLocationState = atom({
   key: 'selectedLocationState',
   default: {
-    location: null,
+    city: null,
   },
+});
+
+export const disabledDatesState = atom({
+  key: 'disabledDatesState',
+  default: [],
+});
+
+export const totalPriceState = atom({
+  key: 'totalPriceState',
+  default: 0,
+});
+
+export const isLoggedInState = atom({
+  key: 'isLoggedInState',
+  default: false,
+});
+
+export const selectedHotelIdState = atom({
+  key: 'selectedHotelIdState',
+  default: 0,
 });
 
 export default showModalState;

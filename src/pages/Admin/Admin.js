@@ -6,7 +6,6 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 function Admin() {
   const [hotelList, setHotelList] = useState([]);
   const [price, setPrice] = useState(0);
-  const reader = new FileReader();
   const location = useLocation();
   const adminId = location.pathname.slice(-1);
 
@@ -15,106 +14,121 @@ function Admin() {
   }, []);
 
   function loadAdminData() {
-    fetch(`/data/admin${adminId}.json`)
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/admins/1`
+    )
       .then(res => res.json())
-      .then(res => setHotelList(res));
+      // .then(res => console.log(res.data));
+      .then(res => setHotelList(res.data));
+    console.log(hotelList);
   }
 
-  async function submitImage(e, hotelId) {
+  // useEffect(() => {
+  //   console.log(hotelList);
+  // }, [hotelList]);
+
+  function submitImage(e, hotelId) {
+    const formData = new FormData();
     const uploadedFile = e.target.files[0];
-    reader.readAsDataURL(uploadedFile);
-    reader.onload = function (e) {
-      const encodedImg = e.target.result;
-      // await fetch(`url/admins/${adminId}/?stay_id=${hotelId}`, {
-      //   method: 'POST',
-      //   headers: {
-      //     //
-      //   },
-      //   body: {
-      //     image: encodedImg,
-      //   },
-      // })
-      //reLoadHotelList();
-    };
+    formData.append('img', uploadedFile);
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/admins/${adminId}?stay-id=${hotelId}`,
+      {
+        method: 'POST',
+        headers: {
+          //
+        },
+        body: formData,
+      }
+    )
+      .then(res => res.json())
+      .then(res => console.log(res));
+    reloadHotelList();
   }
 
-  function updatePrice(e, id) {
+  function updatePrice(e) {
+    const formData = new FormData();
     const val = e.target.value;
     setPrice(val);
+    formData.append('price', price);
+  }
+  const hotelId = 2;
+  async function submitPrice() {
+    console.log(price);
+    const formData = new FormData();
+    formData.append('price', price);
+    for (var value of formData.values()) {
+      console.log(value);
+    }
+    await fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/admins/${adminId}?stay-id=${hotelId}`,
+      {
+        method: 'POST',
+        headers: {},
+        body: formData,
+      }
+    )
+      .then(res => res.json())
+      .then(res => console.log(res));
+    reloadHotelList();
+  }
+  // const adminId = 1;
+  async function deleteHotel(id) {
+    await fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/admins/${adminId}?stay-id=2`,
+      {
+        method: 'DELETE',
+      }
+    )
+      .then(res => res.json())
+      .then(res => console.log(res));
+    reloadHotelList();
   }
 
-  async function submitPrice(hotelId) {
-    // await fetch(`url/admins/${adminId}/?stay_id=${hotelId}`, {
-    //   method: 'PATCH',
-    //   headers: {
-    //     //
-    //   },
-    //   body: {
-    //     price: price,
-    //   },
-    // });
-    //reLoadHotelList();
+  function reloadHotelList() {
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/admins/${adminId}`
+    )
+      .then(res => res.json())
+      .then(res => setHotelList([...res.data]));
   }
 
-  async function deleteHotel(hotelId) {
-    // await fetch(`url/admins/${adminId}/?stay_id=${hotelId}`, {
-    //   method: 'PATCH',
-    //   headers: {
-    //     //
-    //   },
-    //   body: {
-    //     hotelId: hotelId,
-    //   },
-    // });
-    //reLoadHotelList();
-  }
-
-  function reLoadHotelList() {
-    // fetch(`url/admins/${adminId}`, {
-    //   method: 'PATCH',
-    //   headers: {
-    //     //
-    //   },
-    //   body: {
-    //   },
-    // });
-  }
+  useEffect(() => {
+    console.log(hotelList);
+  }, [hotelList]);
 
   return (
     <Wrapper>
       <HotelList>
         <ListTitle>Hotel List</ListTitle>
-        {hotelList.map((hotel, idx) => (
-          <HotelItem key={idx}>
-            <Name>{hotel.name}</Name>
-            <ImgContainer>
-              <img src={hotel.img} alt={hotel.name} />
-              <UploadButton>
-                <input
-                  type="file"
-                  src=""
-                  alt="change_img"
-                  accept="image/*"
-                  onChange={e => submitImage(e, hotel.id)}
-                />
-              </UploadButton>
-            </ImgContainer>
-            <TextContainer>
-              <Price>{`가격: ${hotel.price}`}</Price>
-              <PriceInputWrapper>
-                <PriceInput
-                  onChange={e => updatePrice(e, hotel.id)}
-                ></PriceInput>
-                <PriceButton onClick={() => submitPrice(hotel.id)}>
-                  변경
-                </PriceButton>
-              </PriceInputWrapper>
-            </TextContainer>
-            <CloseButton>
-              <GrClose />
-            </CloseButton>
-          </HotelItem>
-        ))}
+        {hotelList.length &&
+          hotelList.map((hotel, idx) => (
+            <HotelItem key={idx}>
+              <Name>{hotel.name}</Name>
+              <ImgContainer>
+                <img src={hotel.img} alt={hotel.name} />
+                <UploadButton>
+                  <input
+                    type="file"
+                    src=""
+                    alt="change_img"
+                    accept="image/*"
+                    onChange={e => submitImage(e, hotel.hotelId)}
+                  />
+                </UploadButton>
+              </ImgContainer>
+              <TextContainer>
+                <Price>{`가격: ${hotel.price}`}</Price>
+                <PriceInputWrapper>
+                  <PriceInput onChange={e => updatePrice(e)}></PriceInput>
+                  <PriceButton onClick={submitPrice}>변경 </PriceButton>
+                </PriceInputWrapper>
+              </TextContainer>
+              <CloseButton onClick={() => deleteHotel(hotel.id)}>
+                <GrClose />
+              </CloseButton>
+            </HotelItem>
+          ))}
       </HotelList>
     </Wrapper>
   );

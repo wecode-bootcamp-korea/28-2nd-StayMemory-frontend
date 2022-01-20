@@ -1,7 +1,10 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { KAKAO_AUTH_URL } from '../../components/OAuth/Oauth';
+// import { KAKAO_AUTH_URL } from './Oauth';
 
+const CLIENT_ID = process.env.REACT_APP_CLIENT_SECRET;
+const REDIRECT_URI = 'http://localhost:3000/signin_kakao';
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 function Login() {
   return (
     <Container>
@@ -17,7 +20,6 @@ function Login() {
           <LoginInput placeholder="이메일 아이디" />
           <LoginInput placeholder="비밀번호" />
           <LoginButton>LOGIN</LoginButton>
-
           <KakaoBtn href={KAKAO_AUTH_URL}>
             <img src="/images/kakaoBtn.png" alt="카카오 로그인 버튼" />
           </KakaoBtn>
@@ -32,7 +34,7 @@ export default Login;
 const sayHelloAnimation = keyframes`
   from {
     transform: rotate(-5deg);
-  }to{
+  } to {
     transform: rotate(5deg);
   }
 `;

@@ -12,7 +12,7 @@ function Location() {
   function selectLocation(str) {
     setSelectedLocation({
       ...selectedLocation,
-      location: str,
+      city: str,
     });
   }
 
@@ -29,25 +29,25 @@ function Location() {
       <SearchTitle>국내</SearchTitle>
       <ButtonWrapper>
         <Button
-          isClicked={selectedLocation.location === '전체'}
+          isClicked={selectedLocation.city === '전체'}
           onClick={() => selectLocation('전체')}
         >
           전체
         </Button>
         <Button
-          isClicked={selectedLocation.location === '서울'}
+          isClicked={selectedLocation.city === '서울'}
           onClick={() => selectLocation('서울')}
         >
           서울
         </Button>
         <Button
-          isClicked={selectedLocation.location === '제주'}
+          isClicked={selectedLocation.city === '제주'}
           onClick={() => selectLocation('제주')}
         >
           제주
         </Button>
         <Button
-          isClicked={selectedLocation.location === '강원'}
+          isClicked={selectedLocation.city === '강원'}
           onClick={() => selectLocation('강원')}
         >
           강원
