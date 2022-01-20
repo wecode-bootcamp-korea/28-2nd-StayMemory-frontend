@@ -12,7 +12,7 @@ function Nav() {
   }
   return (
     <Wrapper>
-      <div className="logo">loo</div>
+      <div className="logo">logo</div>
       <FilterWrap>
         <span className="location">
           <HiOutlineLocationMarker />
