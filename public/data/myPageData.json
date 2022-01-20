@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "hotelNameKor": "신라 호텔",
+    "address": "서울시 테헤란로",
+    "baseNum": 1,
+    "maxNum": 10,
+    "price": "210,000 ~ 320,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/068/329/original/ba12ed52be20c06cba766f74bf015fb12c0ce7d2.jpg?1618555437"
+  },
+  {
+    "id": 2,
+    "hotelNameKor": "파라다이스 호텔",
+    "address": "부산시 해운대로",
+    "baseNum": 2,
+    "maxNum": 4,
+    "price": "510,000 ~ 620,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/104/312/original/02227b12a21767c6c4c08c71c4a8c16ea4c2044d.jpg?1639374823"
+  },
+  {
+    "id": 3,
+    "hotelNameKor": "롯데 호텔",
+    "address": "제주시 애월로",
+    "baseNum": 2,
+    "maxNum": 14,
+    "price": "430,000 ~ 620,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/105/489/original/63e9b44c9b008d805031a0d0bf58f3330830e0a8.jpg?1640078108);background-repeat:no-repeat;background-position:center;background-size:cover"
+  },
+  {
+    "id": 4,
+    "hotelNameKor": "L7 호텔",
+    "address": "서울시 테헤란로",
+    "baseNum": 2,
+    "maxNum": 4,
+    "price": "50,000 ~ 150,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/108/085/original/0613f122e6154d0814f1ae525813121d16b38dab.jpg?1641263789);background-repeat:no-repeat;background-position:center;background-size:cover"
+  },
+  {
+    "id": 5,
+    "hotelNameKor": "채현 호텔",
+    "address": "서울시 테헤란로",
+    "baseNum": 2,
+    "maxNum": 4,
+    "price": "1,000,000 ~ 2,220,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/104/312/original/02227b12a21767c6c4c08c71c4a8c16ea4c2044d.jpg?1639374823"
+  },
+  {
+    "id": 6,
+    "hotelNameKor": "찬영 호텔",
+    "address": "서울시 테헤란로",
+    "baseNum": 2,
+    "maxNum": 3,
+    "price": "510,000 ~ 620,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/104/312/original/02227b12a21767c6c4c08c71c4a8c16ea4c2044d.jpg?1639374823"
+  },
+  {
+    "id": 7,
+    "hotelNameKor": "재엽 호텔",
+    "address": "서울시 테헤란로",
+    "baseNum": 2,
+    "maxNum": 4,
+    "price": "510,000 ~ 620,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/104/312/original/02227b12a21767c6c4c08c71c4a8c16ea4c2044d.jpg?1639374823"
+  },
+  {
+    "id": 8,
+    "hotelNameKor": "석호 호텔",
+    "address": "서울시 테헤란로",
+    "baseNum": 2,
+    "maxNum": 4,
+    "price": "510,000 ~ 620,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/104/312/original/02227b12a21767c6c4c08c71c4a8c16ea4c2044d.jpg?1639374823"
+  },
+  {
+    "id": 9,
+    "hotelNameKor": "가윤 호텔",
+    "address": "서울시 테헤란로",
+    "baseNum": 2,
+    "maxNum": 4,
+    "price": "510,000 ~ 620,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/104/312/original/02227b12a21767c6c4c08c71c4a8c16ea4c2044d.jpg?1639374823"
+  },
+  {
+    "id": 10,
+    "hotelNameKor": "호진 호텔",
+    "address": "서울시 테헤란로",
+    "baseNum": 1,
+    "maxNum": 4,
+    "price": "510,000 ~ 620,000",
+    "img": "https://images.stayfolio.com/system/pictures/images/000/104/312/original/02227b12a21767c6c4c08c71c4a8c16ea4c2044d.jpg?1639374823"
+  }
+]

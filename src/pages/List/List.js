@@ -15,6 +15,8 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
 export default function List() {
+  const [hotel, setHotel] = useState([]);
+
   const navigate = useNavigate();
   const location = useLocation();
   const [currentID, setCurrentID] = useState();
@@ -22,16 +24,30 @@ export default function List() {
   const handleFilter = stateObj => {
     const URLSearch = new URLSearchParams(location.search);
     Object.entries(stateObj).map(([key, value]) => {
-      value && URLSearch.append(key, value);
+      if (typeof value === 'boolean') {
+        value && URLSearch.append('category', key);
+      } else {
+        value && URLSearch.append(key, value);
+      }
     });
-    navigate(`?` + URLSearch.toString());
+    navigate(`/list?` + URLSearch.toString());
+    closeHandler();
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/list${location.search}`);
-    // .then(res => res.json())
-    // .then(data => console.log(data));
+    console.log('QS바뀌어서 re-fetch');
+    fetch(`http://10.58.5.136:8000/stays${location.search}`)
+      .then(res => res.json())
+      // .then(data => console.log(data));
+      .then(res => setHotel(res.data));
   }, [location.search]);
+
+  useEffect(() => {
+    fetch('http://10.58.5.136:8000/stays')
+      .then(res => res.json())
+      // .then(res => console.log(res));
+      .then(res => setHotel(res.data));
+  }, []);
 
   const clickHandler = id => {
     setCurrentID(id);
@@ -70,8 +86,8 @@ export default function List() {
               </ModalBtn>
               {currentID === 1 && (
                 <SelectPrice
-                  handleFilter={handleFilter}
                   closeHandler={closeHandler}
+                  handleFilter={handleFilter}
                 />
               )}
             </div>
@@ -82,8 +98,8 @@ export default function List() {
               </ModalBtn>
               {currentID === 2 && (
                 <SelectType
-                  handleFilter={handleFilter}
                   closeHandler={closeHandler}
+                  handleFilter={handleFilter}
                 />
               )}
             </div>
@@ -94,8 +110,8 @@ export default function List() {
               </ModalBtn>
               {currentID === 3 && (
                 <SelectTheme
-                  handleFilter={handleFilter}
                   closeHandler={closeHandler}
+                  handleFilter={handleFilter}
                 />
               )}
             </div>
@@ -119,7 +135,7 @@ export default function List() {
           <PreferMenu>낮은 가격순</PreferMenu>
         </PreferList>
       </PreferListWrapper>
-      <HotelList />
+      <HotelList hotel={hotel} />
     </Container>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   ModalPeopleBtn,
   ModalPeopleBtnWrapper,
@@ -23,8 +23,8 @@ export default function SelectPrice({ closeHandler, handleFilter }) {
 
   const convertToPriceObj = () => {
     return {
-      price_min: value[0],
-      price_max: value[1],
+      minprice: value[0] * 10000,
+      maxprice: value[1] * 10000,
     };
   };
 

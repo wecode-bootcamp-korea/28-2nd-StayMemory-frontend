@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { BiRefresh } from 'react-icons/bi';
 
@@ -11,7 +12,9 @@ export default function FilterDay() {
         <KeywordInput />
         <KeywordBtn>국내전체</KeywordBtn>
         <KeywordReset>
-          <BiRefresh className="BiRefresh" />
+          <ResetLink to="/list">
+            <BiRefresh className="BiRefresh" />
+          </ResetLink>
         </KeywordReset>
       </Keyword>
       <CheckInOut>
@@ -23,6 +26,16 @@ export default function FilterDay() {
     </FilterDays>
   );
 }
+
+// function Login() {
+//   return (
+//     <div>
+//       <Link to="/signup">회원가입</Link>
+//     </div>
+//   );
+// }
+
+const ResetLink = styled(Link)``;
 
 const Keyword = styled.div`
   display: flex;

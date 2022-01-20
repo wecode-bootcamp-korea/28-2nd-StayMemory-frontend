@@ -1,34 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-export default function HotelList() {
-  const [hotel, setHotel] = useState([]);
+export default function HotelList({ hotel }) {
+  // const [hotel, setHotel] = useState([]);
 
-  useEffect(() => {
-    fetch('http://localhost:3000/List/List.json')
-      .then(res => res.json())
-      .then(res => setHotel(res));
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://10.58.5.136:8000/stays')
+  //     .then(res => res.json())
+  //     // .then(res => console.log(res));
+  //     .then(res => setHotel(res.data));
+  // }, []);
 
   return (
     <HotelListWrapper>
-      {hotel.map(ele => (
-        <HotelLists key={ele.id}>
-          <HotelNameKor>{ele.hotelNameKor}</HotelNameKor>
-          <HotelType>{ele.stayType}</HotelType>
-          <HotelContentList>
-            <HotelContent>
-              <Address>{ele.address}</Address>
-              <Num>
-                기준 {ele.baseNum}명 (최대 {ele.maxNum} 명)
-              </Num>
-              <Price>₩{ele.price}</Price>
-              <p>예약하기</p>
-            </HotelContent>
-            <Img src={ele.img} alt="호텔이미지" />
-          </HotelContentList>
-        </HotelLists>
-      ))}
+      {hotel &&
+        hotel.map(ele => (
+          <HotelLists key={ele.id}>
+            <HotelNameKor>{ele.hotelNameKor}</HotelNameKor>
+            <HotelType>{ele.stayType}</HotelType>
+            <HotelContentList>
+              <HotelContent>
+                <Address>{ele.address}</Address>
+                <Num>
+                  기준 {ele.baseNum}명 (최대 {ele.maxNum} 명)
+                </Num>
+                <Price>₩{ele.price}</Price>
+                <p>예약하기</p>
+              </HotelContent>
+              <Img src={ele.img} alt="호텔이미지" />
+            </HotelContentList>
+          </HotelLists>
+        ))}
     </HotelListWrapper>
   );
 }
@@ -66,7 +68,7 @@ const HotelContent = styled.div`
   line-height: 2;
   color: #333333;
   cursor: pointer;
-  margin-top: 148px;
+  margin-top: 120px;
 
   p {
     display: inline-block;
@@ -79,7 +81,7 @@ const HotelContent = styled.div`
 `;
 
 const Img = styled.img`
-  width: 70%;
+  width: 60%;
 `;
 
 const Address = styled.div``;
