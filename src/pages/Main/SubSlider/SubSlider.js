@@ -1,74 +1,146 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
-import SubSliderItem from './SubSliderItem';
 
-function SubSlider() {
-  const [subSliderList, setSubSliderList] = useState([]);
-  useEffect(() => {
-    function loadSubSliderList() {
-      fetch('/data/subSlider.json')
-        .then(res => res.json())
-        .then(res => setSubSliderList([...res]));
-    }
-    loadSubSliderList();
-  }, []);
-
-  function ArrowLeft(props) {
-    return (
-      <button {...props} className="prev">
-        <IoIosArrowBack className="arrowBack" />
-      </button>
-    );
-  }
-  function ArrowRight(props) {
-    return (
-      <button {...props} className="next">
-        <IoIosArrowForward className="arrowForward" />
-      </button>
-    );
-  }
+function SubSlider({ subSlide }) {
   const settings = {
     infinite: true,
+    dots: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
     arrows: true,
-    centerMode: true,
-    prevArrow: <ArrowLeft />,
-    nextArrow: <ArrowRight />,
   };
 
   return (
     <Wrapper>
-      <h1>{subSliderList[0].title}</h1>
-      <Slider {...settings}>
-        {subSliderList[0].hotels.map((hotel, idx) => (
-          <div className="slideContainer">
-            <SubSliderItem key={idx} hotel={hotel} />
-          </div>
-        ))}
-      </Slider>
-      <div className="slideNum">
-        <p className="currentSlideNum">1 / 10</p>
-      </div>
-      <div className="slideButtons" />
+      <SliderWrapper>
+        <Slider {...settings}>
+          {subSlide[0].hotels.map((hotel, idx) => (
+            <ImgContainer key={idx}>
+              <img className="slideImg" src={hotel.img} alt={hotel.name} />
+              <HotelInfoWrap>
+                <HotelTitle>{hotel.name}</HotelTitle>
+                <TextWrap>
+                  <HotelLocation>{hotel.location}</HotelLocation>
+                  <HotelPrice>{`${hotel.minPrice}~${hotel.maxPrice}`}</HotelPrice>
+                </TextWrap>
+                <ReadMore>read more</ReadMore>
+              </HotelInfoWrap>
+            </ImgContainer>
+          ))}
+        </Slider>
+      </SliderWrapper>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  height: 20rem;
+  position: relative;
+  width: 80vw;
+  margin-bottom: 3rem;
 
-  .slideContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 300px;
+  .prev {
+    position: absolute;
+    width: 4.5rem;
+    height: 7.5rem;
+    background-color: transparent;
+    border: none;
+    transform: translate(188%, 355%);
+    z-index: 5;
   }
+
+  .next {
+    position: absolute;
+    width: 4.5rem;
+    height: 7.5rem;
+    background-color: transparent;
+    border: none;
+    transform: translate(290%, -205%);
+    z-index: 5;
+  }
+
+  .arrowBack {
+    font-size: 2rem;
+    color: white;
+    opacity: 0.6;
+  }
+
+  .arrowForward {
+    font-size: 2rem;
+    color: white;
+    opacity: 0.6;
+  }
+
+  .slideNum {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8.5rem;
+    height: 7.5rem;
+    opacity: 0.7;
+    background-color: black;
+    color: white;
+    font-size: 1.5rem;
+    transform: translateY(56%);
+  }
+
+  .slideButtons {
+    width: 8.7rem;
+    height: 7.5rem;
+    opacity: 0.7;
+    background-color: black;
+    transform: translate(98%, 56%);
+    z-index: 1;
+  }
+`;
+
+const SliderWrapper = styled.div``;
+
+const ImgContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+
+  img {
+    object-fit: cover;
+    width: 100%;
+  }
+`;
+
+const HotelInfoWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+`;
+
+const HotelTitle = styled.h3`
+  margin-bottom: 1rem;
+  font-size: ${props => props.theme.fontBold};
+`;
+
+const TextWrap = styled.div`
+  display: flex;
+  margin-bottom: 1.5rem;
+`;
+
+const HotelLocation = styled.p`
+  font-size: ${props => props.theme.fontMedium};
+`;
+
+const HotelPrice = styled.p``;
+
+const ReadMore = styled.button`
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
 `;
 
 export default SubSlider;
