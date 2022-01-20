@@ -1,11 +1,14 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsArrowRight } from 'react-icons/bs';
 import { GrClose } from 'react-icons/gr';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import showModalState, {
   selectedDatesState,
+  selectedHotelIdState,
   selectedLocationState,
+  totalPriceState,
   validDatesState,
 } from './GlobalState';
 import Location from '../Modal/Location/Location';
@@ -18,9 +21,13 @@ export default function StaticDateRangePickerDemo() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useRecoilState(showModalState);
   const selectedDates = useRecoilValue(selectedDatesState);
+  const selectedHotelId = useRecoilValue(selectedHotelIdState);
   const selectedLocation = useRecoilValue(selectedLocationState);
   const validDates = useRecoilValue(validDatesState);
   const [buttonIsValid, setButtonIsValid] = React.useState(false);
+  const setTotalPrice = useSetRecoilState(totalPriceState);
+  const params = useParams();
+  console.log(params);
 
   function onClickSearch() {
     setShowModal(null);
@@ -29,8 +36,16 @@ export default function StaticDateRangePickerDemo() {
     } else if (showModal === 'date') {
       navigate(convertToQs('list', selectedDates));
     } else if (showModal === 'date_detail') {
-      console.log(selectedDates);
+      submitSelectedDates();
     }
+  }
+
+  function submitSelectedDates() {
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays/${selectedHotelId}/price?start-date=${selectedDates.checkin}&end-date=${selectedDates.checkout}&num-people=2`
+    )
+      .then(res => res.json())
+      .then(res => setTotalPrice(res.data.total_price));
   }
 
   useEffect(() => {

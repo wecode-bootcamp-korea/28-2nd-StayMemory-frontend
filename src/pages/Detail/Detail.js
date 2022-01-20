@@ -1,79 +1,144 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IoIosArrowRoundBack, IoIosArrowDown } from 'react-icons/io';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import showModalState, {
+  disabledDatesState,
   selectedDatesState,
+  selectedHotelIdState,
+  totalPriceState,
 } from '../../components/Modal/GlobalState';
 import { useParams } from 'react-router-dom';
-// import SelectDateFindStay from '../'
 
 function Detail() {
-  const [detail, setDetail] = useState({});
+  const [detail, setDetail] = useState([]);
   const setModal = useSetRecoilState(showModalState);
   const selectedDates = useRecoilValue(selectedDatesState);
+  const [disabledDates, setDisabledDates] = useRecoilState(disabledDatesState);
+  const [selectedHotelId, setSelectedHotelId] =
+    useRecoilState(selectedHotelIdState);
   const params = useParams();
+  const totalPrice = useRecoilValue(totalPriceState);
+  const LOGIN_TOKEN = sessionStorage.getItem('loginToken');
 
   useEffect(() => {
-    fetch(`/data/detail${params.hotelName}.json`)
-      .then(res => res.json())
-      .then(res => setDetail(res));
+    loadDetailData();
+    getUnavaliableDate();
+    saveHotelId();
   }, []);
+
+  function saveHotelId() {
+    setSelectedHotelId(params.id);
+  }
+
+  function loadDetailData() {
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays/${params.id}`
+    )
+      .then(res => res.json())
+      // .then(res => console.log(res));
+      .then(res => setDetail([res.data]));
+  }
+
+  function getUnavaliableDate() {
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays/1/unavailable-date?start-date=2022-01-01`
+    )
+      .then(res => res.json())
+      .then(res => setDisabledDates([...res.data.date]));
+  }
 
   function showDatesModal() {
     setModal('date_detail');
   }
 
+  function bookHotel(hotel) {
+    alert('예약되었습니다.');
+    const test = {
+      stayId: hotel.hotelId,
+      numPeople: 2,
+      checkin: selectedDates.checkin,
+      checkout: selectedDates.checkout,
+      price: totalPrice,
+      payment: 'credit_card',
+    };
+
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/reservations`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: LOGIN_TOKEN,
+        },
+        body: JSON.stringify({
+          stayId: 1,
+          numPeople: 2,
+          checkin: '2021-02-21',
+          checkout: '2021-02-22',
+          price: totalPrice,
+          payment: 'credit_card',
+        }),
+      }
+    )
+      .then(res => res.json())
+      .then(res => console.log(res));
+  }
+
+  const stay = detail[0];
+
   return (
     <Wrapper>
-      <Container>
-        <HeaderWrapper>
-          <Title>BOOKING</Title>
-          <BackWrapper>
-            <IoIosArrowRoundBack />
-            <p>돌아가기</p>
-          </BackWrapper>
-          <SelectWrapper>
-            <h2>{detail.hotelName}</h2>
-            <SelectDateWrapper onClick={showDatesModal}>
-              {selectedDates.check_out !== null ? (
-                <p>{`${selectedDates.checkin}~${selectedDates.checkout}`}</p>
-              ) : (
-                <>
-                  <div>날짜를 선택해주세요</div>
-                  <IoIosArrowDown />
-                </>
-              )}
-            </SelectDateWrapper>
-            <BookButton>
-              <button>결제하기</button>
-            </BookButton>
-          </SelectWrapper>
-        </HeaderWrapper>
-        <ContentWrapper>
-          <RoomInfoWrapper>
-            <RoomInfoTitleWrapper>
-              <RoomInfoTitle>ROOM INFORMATION</RoomInfoTitle>
-              <HotelName>{detail.hotelName}</HotelName>
-            </RoomInfoTitleWrapper>
-            <p>-</p>
-            <HotelDescription>{detail.hotelDescription}</HotelDescription>
-            <RoomDescription>
-              <p>
-                체크인 {detail.checkin}/ 체크아웃 {detail.checkout}
-              </p>
-              <p>
-                기준 인원 {detail.headCount}명 (최대 인원 {detail.headCount}명)
-              </p>
-              <p>객실면적 {detail.area}m</p>
-              <p>{detail.bed}</p>
-            </RoomDescription>
-          </RoomInfoWrapper>
-          <RoomImgWrapper>
-            <img src={detail.img} alt="detail_img" />
-          </RoomImgWrapper>
-        </ContentWrapper>
-      </Container>
+      {detail.length && (
+        <Container>
+          <HeaderWrapper>
+            <Title>BOOKING</Title>
+            <BackWrapper>
+              <IoIosArrowRoundBack />
+              <p>돌아가기</p>
+            </BackWrapper>
+            <SelectWrapper>
+              <h2>{stay.hotelName}</h2>
+              <SelectDateWrapper onClick={showDatesModal}>
+                {selectedDates.checkout !== null ? (
+                  <p>{`${selectedDates.checkin}~${selectedDates.checkout}`}</p>
+                ) : (
+                  <>
+                    <div>날짜를 선택해주세요</div>
+                    <IoIosArrowDown />
+                  </>
+                )}
+              </SelectDateWrapper>
+              <BookButton onClick={() => bookHotel(stay)}>
+                <button>{totalPrice ? `${totalPrice}원  ` : ''}결제하기</button>
+              </BookButton>
+            </SelectWrapper>
+          </HeaderWrapper>
+          <ContentWrapper>
+            <RoomInfoWrapper>
+              <RoomInfoTitleWrapper>
+                <RoomInfoTitle>ROOM INFORMATION</RoomInfoTitle>
+                <HotelName>{stay.hotelName}</HotelName>
+              </RoomInfoTitleWrapper>
+              <p>-</p>
+              <HotelDescription>{stay.hotelDescription}</HotelDescription>
+              <RoomDescription>
+                <p>
+                  체크인 {stay.checkin}/ 체크아웃 {stay.checkout}
+                </p>
+                <p>
+                  기준 인원 {stay.headCount}명 (최대 인원 {stay.headCount}명)
+                </p>
+                <p>객실면적 {stay.area}m</p>
+                {/* <p>{stay.bed}</p> */}
+              </RoomDescription>
+            </RoomInfoWrapper>
+            <RoomImgWrapper>
+              <img src={stay.img} alt="detail_img" />
+            </RoomImgWrapper>
+          </ContentWrapper>
+        </Container>
+      )}
     </Wrapper>
   );
 }
@@ -188,7 +253,7 @@ const RoomInfoTitle = styled.h1`
 
 const HotelName = styled.h2`
   margin: 1rem 0 2rem 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
 `;
 
 const HotelDescription = styled.p`

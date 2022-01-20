@@ -17,6 +17,7 @@ function MyPage() {
   const queryString = location.pathname;
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const LOGIN_TOKEN = sessionStorage.getItem('loginToken');
 
   const page = {
     W: 'wishlists',
@@ -44,17 +45,20 @@ function MyPage() {
       `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/${handleQueryString()}`,
       {
         headers: {
-          Authorization:
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
+          Authorization: LOGIN_TOKEN,
         },
       }
     )
       .then(res => res.json())
-      .then(res => console.log(res));
-    // .then(res => {
-    //   setHotelData(res.hotelData);
-    // });
+      // .then(res => console.log(res));
+      .then(res => {
+        setHotelData(res.data);
+      });
   }, [queryString, location.pathname]);
+
+  useEffect(() => {
+    console.log(hotelData);
+  }, [hotelData]);
 
   const updateOffset = btnidx => {
     const limit = 2;
@@ -67,13 +71,17 @@ function MyPage() {
     fetch('http://192.168.243.37:8082/users/info', {
       method: 'GET',
       headers: {
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
+        Authorization: LOGIN_TOKEN,
       },
     })
       .then(res => res.json())
       .then(res => setWelcomeData(res));
   }, []);
+
+  const keyObj = {
+    id: 'id' ?? 'hotelId',
+    name: 'hotelNameKor' ?? 'hotelName',
+  };
 
   return (
     <Container>
@@ -129,28 +137,31 @@ function MyPage() {
             </ButtonsWrapper>
           )}
           <HotelInfo>
-            {hotelData.map(hotelEle => {
-              return (
-                <HotelWrap key={hotelEle.id}>
-                  <HotelInfoText>
-                    <HotelNameKor>{hotelEle.hotelNameKor}</HotelNameKor>
-                    <HotelNameEng>PARADISE HOTEL</HotelNameEng>
-                    <HotelNormalInfoWrap>
-                      <HotelNormalInfo>{hotelEle.address}</HotelNormalInfo>
-                      <HotelNormalInfo>
-                        최소{hotelEle.baseNum}명/최대{hotelEle.maxNum}명
-                      </HotelNormalInfo>
-                      <HotelNormalInfo>{hotelEle.price}</HotelNormalInfo>
-                    </HotelNormalInfoWrap>
+            {hotelData &&
+              hotelData.map(hotelEle => {
+                return (
+                  <HotelWrap key={hotelEle.id || hotelEle.hotelId}>
+                    <HotelInfoText>
+                      <HotelNameKor>
+                        {hotelEle.hotelNameKor || hotelEle.hotelName}
+                      </HotelNameKor>
+                      <HotelNameEng>PARADISE HOTEL</HotelNameEng>
+                      <HotelNormalInfoWrap>
+                        <HotelNormalInfo>{hotelEle.address}</HotelNormalInfo>
+                        <HotelNormalInfo>
+                          최소{hotelEle.baseNum}명/최대{hotelEle.maxNum}명
+                        </HotelNormalInfo>
+                        <HotelNormalInfo>{hotelEle.price}</HotelNormalInfo>
+                      </HotelNormalInfoWrap>
 
-                    <ReserveBtn>예약하기</ReserveBtn>
-                  </HotelInfoText>
-                  <div>
-                    <HotelImg src={hotelEle.img} alt="호텔이미지" />
-                  </div>
-                </HotelWrap>
-              );
-            })}
+                      <ReserveBtn>예약하기</ReserveBtn>
+                    </HotelInfoText>
+                    <div>
+                      <HotelImg src={hotelEle.img} alt="호텔이미지" />
+                    </div>
+                  </HotelWrap>
+                );
+              })}
           </HotelInfo>
         </MyPageContent>
       </MainContainer>
@@ -204,13 +215,18 @@ const MyPageContent = styled.div`
   padding-top: 50px;
 `;
 
-const ButtonsWrapper = styled.div``;
+const ButtonsWrapper = styled.div`
+  display: flex;
+  height: 5rem;
+`;
+
 const ReservationInfo = styled.span`
-  padding: 1rem;
+  margin-right: 1rem;
+  font-size: 1.3rem;
   cursor: pointer;
 `;
 const History = styled.span`
-  padding: 1rem;
+  font-size: 1.3rem;
   cursor: pointer;
 `;
 const ReserveBtn = styled.button`
