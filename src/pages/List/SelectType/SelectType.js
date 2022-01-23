@@ -20,11 +20,6 @@ export default function SelectTheme({ closeHandler, handleFilter }) {
     호텔: false,
   });
 
-  // 1. 일단 state 만들고
-  // 2. selectedType 를 순회하면서 true값을 찾아
-  // 3. true의 key를 찾아
-  // 4. state에 찾은 key값을 value로 넣어준다.
-
   const handleChange = e => {
     // 1. event 객체에서 클릭이 일어난 돔이 뭔지 가져오기(guestHouse, Hotel)
     // 2. 1을 가져온 이유는 selectedType에 있는 값을 '거꾸로 뒤집기(이전 값을 가져와서 반대 연산자를 적용)' 위해서

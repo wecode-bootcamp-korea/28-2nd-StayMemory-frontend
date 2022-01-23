@@ -33,17 +33,18 @@ export default function List() {
     navigate(`/list?` + URLSearch.toString());
     closeHandler();
   };
-
   useEffect(() => {
-    console.log('QS바뀌어서 re-fetch');
-    fetch(`http://10.58.5.136:8000/stays${location.search}`)
+    // console.log('QS바뀌어서 re-fetch');
+    fetch(
+      `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays${location.search}`
+    )
       .then(res => res.json())
       // .then(data => console.log(data));
       .then(res => setHotel(res.data));
   }, [location.search]);
 
   useEffect(() => {
-    fetch('http://10.58.5.136:8000/stays')
+    fetch('http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays')
       .then(res => res.json())
       // .then(res => console.log(res));
       .then(res => setHotel(res.data));
@@ -434,3 +435,5 @@ const PreferMenu = styled.div`
 //   justify-content: center;
 //   margin-top: 50px;
 // `;
+
+export const Slider = styled.input``;
