@@ -8,18 +8,15 @@ function Likes(props) {
     if (heart === true) {
       heartCnt++;
     }
-    // fetch()
     fetch('http://192.168.243.37:8082/wishlists', {
       method: 'POST',
       headers: {
         Authorization:
           'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
       },
-      //   body: JSON.stringify({ stayId: 3 }),
     })
       .then(response => response.json())
       .then(response => console.log(response));
-    // props.productData
   }
 
   return (
