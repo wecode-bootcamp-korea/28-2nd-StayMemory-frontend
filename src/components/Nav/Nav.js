@@ -48,7 +48,6 @@ function Nav() {
         <span>PRE-ORDER</span>
       </MenuWrap>
       <UserWrap>
-        <div>count</div>
         {isLoggedIn && <HiUser />}
         <button className="login" onClick={() => goToPage('/login')}>
           {isLoggedIn ? 'LOGOUT' : 'LOGIN'}

@@ -1,0 +1,42 @@
+[
+  {
+    "title": "오직 스테이윗미에서만",
+    "hotels": [
+      {
+        "img": "/images/room.jpg",
+        "name": "베로마",
+        "location": "부산/해운대구",
+        "minPrice": "2000",
+        "maxPrice": "2500"
+      },
+      {
+        "img": "/images/room.jpg",
+        "name": "베로마",
+        "location": "부산/해운대구",
+        "minPrice": "2000",
+        "maxPrice": "2500"
+      },
+      {
+        "img": "/images/room.jpg",
+        "name": "베로마",
+        "location": "부산/해운대구",
+        "minPrice": "2000",
+        "maxPrice": "2500"
+      },
+      {
+        "img": "/images/room.jpg",
+        "name": "베로마",
+        "location": "부산/해운대구",
+        "minPrice": "2000",
+        "maxPrice": "2500"
+      },
+      {
+        "img": "/images/room.jpg",
+        "name": "베로마",
+        "location": "부산/해운대구",
+        "minPrice": "2000",
+        "maxPrice": "2500"
+      }
+    ]
+  }
+]
