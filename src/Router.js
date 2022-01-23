@@ -19,7 +19,6 @@ export default function Router() {
         <Route path="/list" element={<List />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/likes" element={<Likes />} />
       </Routes>
     </BrowserRouter>
   );
