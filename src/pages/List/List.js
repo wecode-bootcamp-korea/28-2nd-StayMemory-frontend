@@ -34,19 +34,16 @@ export default function List() {
     closeHandler();
   };
   useEffect(() => {
-    // console.log('QS바뀌어서 re-fetch');
     fetch(
       `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays${location.search}`
     )
       .then(res => res.json())
-      // .then(data => console.log(data));
       .then(res => setHotel(res.data));
   }, [location.search]);
 
   useEffect(() => {
     fetch('http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays')
       .then(res => res.json())
-      // .then(res => console.log(res));
       .then(res => setHotel(res.data));
   }, []);
 
@@ -429,11 +426,5 @@ const PreferMenu = styled.div`
   cursor: pointer;
   color: rgb(153, 153, 153);
 `;
-
-// const HotelList = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   margin-top: 50px;
-// `;
 
 export const Slider = styled.input``;

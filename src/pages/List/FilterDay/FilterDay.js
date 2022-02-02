@@ -11,11 +11,9 @@ export default function FilterDay() {
         <KeywordTitle>여행지/숙소</KeywordTitle>
         <KeywordInput />
         <KeywordBtn>국내전체</KeywordBtn>
-        <KeywordReset>
-          <ResetLink to="/list">
-            <BiRefresh className="BiRefresh" />
-          </ResetLink>
-        </KeywordReset>
+        <ResetLink to="/list">
+          <BiRefresh className="BiRefresh" />
+        </ResetLink>
       </Keyword>
       <CheckInOut>
         <CheckInOutTitle>체크인</CheckInOutTitle>
@@ -26,16 +24,6 @@ export default function FilterDay() {
     </FilterDays>
   );
 }
-
-// function Login() {
-//   return (
-//     <div>
-//       <Link to="/signup">회원가입</Link>
-//     </div>
-//   );
-// }
-
-const ResetLink = styled(Link)``;
 
 const Keyword = styled.div`
   display: flex;
@@ -79,7 +67,7 @@ const KeywordBtn = styled.div`
   text-align: left;
 `;
 
-const KeywordReset = styled.button`
+const ResetLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,10 +78,15 @@ const KeywordReset = styled.button`
   width: 36px;
   height: 36px;
   background-color: white;
+  color: black;
   cursor: pointer;
 
+  :hover {
+    color: blue;
+  }
+
   & > svg {
-    font-size: 36px;
+    font-size: 18px;
   }
 `;
 

@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 export default function HotelList({ hotel }) {
-  // const [hotel, setHotel] = useState([]);
-
-  // useEffect(() => {
-  //   fetch('http://10.58.5.136:8000/stays')
-  //     .then(res => res.json())
-  //     // .then(res => console.log(res));
-  //     .then(res => setHotel(res.data));
-  // }, []);
+ 
 
   return (
     <HotelListWrapper>

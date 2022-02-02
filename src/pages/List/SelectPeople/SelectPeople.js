@@ -30,7 +30,6 @@ const useCounter = () => {
     setQuantity({
       ...quantity,
       [name]: quantity[name] < 1 ? 0 : quantity[name] - 1,
-      // [name]: quantity[name] >= 1 ? quantity[name] - 1 : 0,
     });
   };
 
