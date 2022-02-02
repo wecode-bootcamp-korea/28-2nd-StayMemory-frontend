@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { GrClose } from 'react-icons/gr';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function Admin() {
   const [hotelList, setHotelList] = useState([]);
@@ -18,14 +18,9 @@ function Admin() {
       `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/admins/1`
     )
       .then(res => res.json())
-      // .then(res => console.log(res.data));
       .then(res => setHotelList(res.data));
     console.log(hotelList);
   }
-
-  // useEffect(() => {
-  //   console.log(hotelList);
-  // }, [hotelList]);
 
   function submitImage(e, hotelId) {
     const formData = new FormData();
@@ -35,9 +30,7 @@ function Admin() {
       `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/admins/${adminId}?stay-id=${hotelId}`,
       {
         method: 'POST',
-        headers: {
-          //
-        },
+        headers: {},
         body: formData,
       }
     )
@@ -72,7 +65,7 @@ function Admin() {
       .then(res => console.log(res));
     reloadHotelList();
   }
-  // const adminId = 1;
+
   async function deleteHotel(id) {
     await fetch(
       `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/admins/${adminId}?stay-id=2`,

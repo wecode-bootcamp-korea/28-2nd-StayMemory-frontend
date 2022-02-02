@@ -27,14 +27,6 @@ export default function FilterDay() {
   );
 }
 
-// function Login() {
-//   return (
-//     <div>
-//       <Link to="/signup">회원가입</Link>
-//     </div>
-//   );
-// }
-
 const ResetLink = styled(Link)``;
 
 const Keyword = styled.div`
