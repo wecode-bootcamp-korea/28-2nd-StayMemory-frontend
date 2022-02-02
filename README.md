@@ -51,7 +51,10 @@ Stay Memory
 
 ## 협업 및 프로젝트 진행 방식 소개
 ### 사용한 툴
-- trello
-  - 스탠드업 미팅, 회고 미팅 진행
+- trello ([사용한 treollo 링크](https://trello.com/b/u2X2xFAH/stay))
+  - 스탠드업 미팅
+  - 회고 미팅
   - 칸반보드로 개별 진행상황 관리
+  - <img width="599" alt="스크린샷 2022-02-02 오후 5 34 16" src="https://user-images.githubusercontent.com/67543454/152119643-5d6e2dca-f40c-4835-9f12-1f964dc6b75f.png">
+
 - 마이페이지 : 관심스테이 탭 구현
