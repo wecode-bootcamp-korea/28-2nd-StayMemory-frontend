@@ -9,9 +9,7 @@ Stay Memory
 
 - 프론트엔드 : 이가윤 이석호 옥채현
 - 백엔드 : 이찬영, 김재엽
-
-백엔드 github 링크
-https://github.com/wecode-bootcamp-korea/28-2nd-StayMemory-backend
+    - [백엔드 github 링크](https://github.com/wecode-bootcamp-korea/28-2nd-StayMemory-backend)
 
 
 <br>
@@ -23,10 +21,10 @@ https://github.com/wecode-bootcamp-korea/28-2nd-StayMemory-backend
 
 ## 구현사항 및 업무 분담
 ### 이가윤
-- 메인 페이지
-- 상세 페이지
+- 메인 페이지 : 순수 리액트 코드와 라이브러리 slick을 활용한 캐러셀 구현
+- 상세 페이지 : 예약 불가 날짜 비활성화, 선택한 기간 예약하기 기능 구현
 - 로그인 페이지 : REST API KEY와 JWT토큰을 사용한 카카오 소셜 로그인 기능 구현
-- 어드민 페이지 
+- 어드민 페이지 : 호텔의 정보(가격, 이미지)를 업데이트 할 수 있는 어드민 페이지 구현
 - 공통 컴포넌트 : Nav 컴포넌트, 달력 컴포넌트 (검색 페이지, 상세페이지, Nav 컴포넌트 공통 사용)
 - 마이 페이지 : 예약정보 / 다녀온 스테이 탭 구현
 
