@@ -3,8 +3,8 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Likes from '../../components/Likes/Likes';
 import { useNavigate } from 'react-router-dom';
+import Like from '../../components/Like/Like';
 
 function SubSlider({ subSlide }) {
   const navigate = useNavigate();
@@ -28,9 +28,9 @@ function SubSlider({ subSlide }) {
           {subSlide.map((hotel, idx) => (
             <ItemContainer key={idx} onClick={() => onClickHotel(hotel.id)}>
               <ImgContainer>
-                <Img img={hotel.img}></Img>
+                <Img img={hotel.img} />
                 <LikesWrapper>
-                  <Likes />
+                  <Like />
                 </LikesWrapper>
               </ImgContainer>
               <HotelInfoWrap>
@@ -81,8 +81,8 @@ const Img = styled.img.attrs(hotel => ({
 `;
 
 const LikesWrapper = styled.div`
-  position: absolute;
-  transform: translate(780%, -110%);
+  /* position: absolute;*/
+  transform: translateY(-110%);
 `;
 
 const HotelInfoWrap = styled.div`

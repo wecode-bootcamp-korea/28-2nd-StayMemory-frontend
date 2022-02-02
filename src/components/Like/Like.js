@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
+import styled from 'styled-components';
 
-function Likes(props) {
+function Like(props) {
   const [heart, setHeart] = useState(false);
 
   function clickHeart() {
@@ -11,22 +13,26 @@ function Likes(props) {
         Authorization:
           'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MX0.AekHFMguragxj6mgkwhioYrEzr6tOktCW-vOYLj1P9M',
       },
-    })
-      .then(response => response.json())
-      .then(response => console.log(response));
+    }).then(response => response.json());
   }
 
   return (
     <div>
       <div>
         {heart ? (
-          <img src="/images/heart2.png" alt="꽉 찬 하트" onClick={clickHeart} />
+          <div onClick={clickHeart}>
+            <RiHeartFill size="20px" />
+          </div>
         ) : (
-          <img src="/images/heart1.png" alt="텅 빈 하트" onClick={clickHeart} />
+          <div onClick={clickHeart}>
+            <RiHeartLine size="20px" color="pink" />
+          </div>
         )}
       </div>
     </div>
   );
 }
 
-export default Likes;
+const iconWrapper = styled.div``;
+
+export default Like;
