@@ -36,7 +36,6 @@ function Detail() {
       `http://ec2-3-36-124-170.ap-northeast-2.compute.amazonaws.com/stays/${params.id}`
     )
       .then(res => res.json())
-      // .then(res => console.log(res));
       .then(res => setDetail([res.data]));
   }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-// import { KAKAO_AUTH_URL } from './Oauth';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_SECRET;
 const REDIRECT_URI = 'http://localhost:3000/signin_kakao';
